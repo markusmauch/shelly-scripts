@@ -12,6 +12,7 @@ Shelly.addEventHandler(
                 // HomeAssistant.call("light", "toggle", "light.hintergrundlicht_flur");
             }
             else if (event.info.event === "long_push") {
+                Shelly.call("KVS.Set", { "key": "test", "value": "asdf" });
                 // HomeAssistant.call("script", "turn_on", "script.lichter_erdgeschoss_ausschalten");
             }
         }
