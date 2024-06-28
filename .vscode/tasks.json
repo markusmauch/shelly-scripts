@@ -1,0 +1,11 @@
+{
+    "tasks": [
+        {
+            "label": "Bundle",
+            "type": "shell",
+            "command": ["rm -Rf ${workspaceFolder}/dist/* && node ${workspaceFolder}/esbuild.mjs"],
+            "problemMatcher": [],
+        }
+    ]
+
+}
