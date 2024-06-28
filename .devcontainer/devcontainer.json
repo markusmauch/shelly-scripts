@@ -1,9 +1,11 @@
 {
     "name": "Shelly Scripts Development",
-    "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:0-20",
+    "build": {
+      "dockerfile": "Dockerfile"
+    },
     "features": {
       "ghcr.io/devcontainers/features/node:1": {
-        "version": "20"
+        "version": "latest"
       }
     },
     "customizations": {
@@ -13,12 +15,11 @@
         },
         "extensions": [
           "dbaeumer.vscode-eslint",
-          "esbenp.prettier-vscode"
+          "esbenp.prettier-vscode",
+          "shellyeurope.shelly-vscode-extension"
         ]
       }
     },
     "postCreateCommand": "npm ci",
-    "forwardPorts": [],
-    "remoteUser": "node"
   }
   

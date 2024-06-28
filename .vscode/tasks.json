@@ -5,6 +5,13 @@
             "type": "shell",
             "command": ["rm -Rf ${workspaceFolder}/dist/* && node ${workspaceFolder}/esbuild.mjs"],
             "problemMatcher": [],
+        },
+        {
+            "label": "Deploy",
+            "type": "shell",
+            "dependsOn": "Bundle",
+            "command": ["python deployment/deploy.py"],
+            "problemMatcher": [],
         }
     ]
 
