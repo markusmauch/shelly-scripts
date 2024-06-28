@@ -62,6 +62,7 @@ def main():
             id,
             host)
         start(host, id)
+        print()
 
 if __name__ == "__main__":
     main()
