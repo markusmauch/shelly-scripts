@@ -8,6 +8,16 @@ Shelly.addEventHandler(
             {
                 HomeAssistant.call("light", "toggle", "light.licht");
             }
+            else if (event.info.event === "btn_down") {
+                Shelly.call("KVS.Get", { key: "direction" }, ( result ) => {
+                    if (result.value==="up")
+                    {}
+                    else if (result.value==="down")
+                    {}
+                } );
+                HomeAssistant.call("light", "toggle", "light.licht_buro" );
+            }
+
             else if (event.info.event === "double_push") {
                 // HomeAssistant.call("light", "toggle", "light.hintergrundlicht_flur");
             }

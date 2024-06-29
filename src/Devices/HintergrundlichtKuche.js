@@ -13,9 +13,7 @@ Shelly.addEventHandler(
                 });
             }
             else if (event.info.event === "long_push") {
-                HomeAssistant.call("lock", "open", {
-                    "entity_id": "lock.haustur"
-                });
+                HomeAssistant.call("lock", "open", "lock.haustur" );
             }
         }
         else {

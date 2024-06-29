@@ -10,7 +10,7 @@
             "label": "Deploy",
             "type": "shell",
             "dependsOn": "Bundle",
-            "command": ["python deployment/deploy.py"],
+            "command": ["pip install -r ${workspaceFolder}/deployment/requirements.txt && python ${workspaceFolder}/deployment/deploy.py"],
             "problemMatcher": [],
         }
     ]
