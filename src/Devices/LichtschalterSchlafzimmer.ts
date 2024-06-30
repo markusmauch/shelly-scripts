@@ -1,4 +1,7 @@
 import * as HomeAssistant from "../Library/HomeAssistant";
+import {Dimmer} from "../Library/Dimmer";
+
+const dimmer = new Dimmer("light.licht");
 
 // Licht
 Shelly.addEventHandler(
@@ -8,22 +11,11 @@ Shelly.addEventHandler(
             {
                 HomeAssistant.call("light", "toggle", "light.licht");
             }
-            else if (event.info.event === "btn_down") {
-                Shelly.call("KVS.Get", { key: "direction" }, ( result ) => {
-                    if (result.value==="up")
-                    {}
-                    else if (result.value==="down")
-                    {}
-                } );
-                HomeAssistant.call("light", "toggle", "light.licht_buro" );
-            }
-
-            else if (event.info.event === "double_push") {
-                // HomeAssistant.call("light", "toggle", "light.hintergrundlicht_flur");
-            }
             else if (event.info.event === "long_push") {
-                Shelly.call("KVS.Set", { "key": "test", "value": "asdf" });
-                // HomeAssistant.call("script", "turn_on", "script.lichter_erdgeschoss_ausschalten");
+                dimmer.start();
+            }
+            else if (event.info.event === "btn_down") {
+                dimmer.stop();
             }
         }
         else {

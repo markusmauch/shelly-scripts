@@ -17,12 +17,41 @@ interface EventInfo
     event: "btn_down" | "btn_up" | "single_push" | "double_push" | "triple_push" | "long_push";
 }
 
-type CallCallback<TResult> = (
-    result: TResult | null | undefined,
-    error_code: number,
-    error_message: string,
-    userdata: any
+type Pups = "diWups";
+
+type CallCallback<TResult=any> = (
+    result: TResult,
+    error_code?: number,
+    error_message?: string,
+    userdata?: any
 ) => void;
+
+interface SwitchTogglePartams
+{
+    id: number;
+}
+
+interface SwitchToggleResult
+{
+    was_on: boolean;
+}
+
+interface HttpRequestParams
+{
+    url: string;
+    method: "POST" | "GET";
+    headers: {[key: string]: string};
+    body?: string;
+}
+
+interface HttpRequestResult
+{
+    code: number;
+    message: string;
+    headers: any;
+    body: string;
+    body_b64: string;
+}
 
 /**
  * Shelly APIs
@@ -35,9 +64,10 @@ declare const Shelly: {
      * @param params Parameters
      * @param callback Function, will be invoked when the call completes
      */
-    call(method: CallMethod, params: object | string, callback: CallCallback<object>): void;
-    call(method: "KVS.Set", params: { key: string, value: string }, callback: CallCallback<void>): void;
-    call(method: "KVS.Get", params: { key: string }, callback: CallCallback<{etag: string, value: string;}>): void;
+    call(method: "HTTP.Request", params: HttpRequestParams, callback?: CallCallback<HttpRequestResult>): void;
+    call(method: "Switch.toggle", params: SwitchToggleParams, callback?: CallCallback<SwitchToggleResult>): void;
+    call(method: "KVS.Set", params: { key: string, value: string }, callback?: CallCallback<void>): void;
+    call(method: "KVS.Get", params: { key: string }, callback?: CallCallback<{etag: string, value: string;}>): void;
 
     /**
      * Allow JS code to react to internal events. Identical to the events reported through RPC notifications as NotifyEvent. Will be invoked when the respective event occurs.

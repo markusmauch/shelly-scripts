@@ -6,14 +6,14 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-export const getJsFiles = (path) => {
+export const getSourceFiles = (path) => {
   const __dirname = Path.dirname(fileURLToPath(import.meta.url));
   const dirPath = Path.join(__dirname, path);
   console.log(dirPath);
   try
   {
     const files = FileSystem.readdirSync(dirPath);
-    return files.filter(file => Path.extname(file) === '.js').map(item => Path.join(dirPath, item));
+    return files.filter(file => Path.extname(file) === '.ts').map(item => Path.join(dirPath, item));
   }
   catch(err)
   {
@@ -21,19 +21,20 @@ export const getJsFiles = (path) => {
   }
 };
 
+const sourceFiles = getSourceFiles(Path.join("src", "Devices"));
 
-const args = process.argv.slice(2)
-const zt = getJsFiles(Path.join("src", "Devices"));
-console.dir(zt);
 const options = {
-  entryPoints: zt,
+  entryPoints: sourceFiles,
   outdir: 'dist',
   bundle: true,
   minify: false,
+  tsconfig: 'tsconfig.json',
   supported: {
     arrow: false,
+    class: false,
+    "template-literal": false,
   },
-  // watch: args.includes('--watch'),
+  target: "ES5",
   define: {
     'API_KEY': JSON.stringify(process.env.API_KEY)
   },

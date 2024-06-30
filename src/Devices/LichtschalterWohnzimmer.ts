@@ -1,4 +1,7 @@
 import * as HomeAssistant from "../Library/HomeAssistant";
+import {Dimmer} from "../Library/Dimmer";
+
+const dimmer = new Dimmer("light.licht_wohnzimmer");
 
 Shelly.addEventHandler(
     (event, userdata) => {
@@ -7,11 +10,11 @@ Shelly.addEventHandler(
             {
                 HomeAssistant.call("light", "toggle", "light.licht_wohnzimmer");
             }
-            else if (event.info.event === "double_push") {
-                // HomeAssistant.call("light", "toggle", "light.hintergrundlicht_flur");
-            }
             else if (event.info.event === "long_push") {
-                // HomeAssistant.call("script", "turn_on", "script.lichter_erdgeschoss_ausschalten");
+                dimmer.start();
+            }
+            else if (event.info.event === "btn_down") {
+                dimmer.stop();
             }
         }
         else {
