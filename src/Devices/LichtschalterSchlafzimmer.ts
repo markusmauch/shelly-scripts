@@ -1,7 +1,7 @@
 import * as HomeAssistant from "../Library/HomeAssistant";
-import {Dimmer} from "../Library/Dimmer";
+// import {Dimmer} from "../Library/Dimmer";
 
-const dimmer = new Dimmer("light.licht");
+// const dimmer = new Dimmer("light.licht");
 
 // Licht
 Shelly.addEventHandler(
@@ -11,12 +11,12 @@ Shelly.addEventHandler(
             {
                 HomeAssistant.call("light", "toggle", "light.licht");
             }
-            else if (event.info.event === "long_push") {
-                dimmer.start();
-            }
-            else if (event.info.event === "btn_down") {
-                dimmer.stop();
-            }
+            // else if (event.info.event === "long_push") {
+            //     dimmer.start();
+            // }
+            // else if (event.info.event === "btn_down") {
+            //     dimmer.stop();
+            // }
         }
         else {
             return true;

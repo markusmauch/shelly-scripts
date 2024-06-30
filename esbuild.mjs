@@ -3,11 +3,13 @@ import * as FileSystem from 'fs';
 import { fileURLToPath } from 'url';
 import * as Path from 'path';
 import * as dotenv from 'dotenv';
+import { es5Plugin } from 'esbuild-plugin-es5';
 
 dotenv.config();
 
+const __dirname = Path.dirname(fileURLToPath(import.meta.url));
+
 export const getSourceFiles = (path) => {
-  const __dirname = Path.dirname(fileURLToPath(import.meta.url));
   const dirPath = Path.join(__dirname, path);
   console.log(dirPath);
   try
@@ -31,13 +33,17 @@ const options = {
   tsconfig: 'tsconfig.json',
   supported: {
     arrow: false,
-    class: false,
+    // class: false,
     "template-literal": false,
   },
-  target: "ES5",
+  target: "es5",
   define: {
     'API_KEY': JSON.stringify(process.env.API_KEY)
   },
+  plugins: [es5Plugin()],
+  alias: {
+    '@swc/helpers': Path.dirname(Path.join(__dirname, "node_modules", "@swc/helpers/package.json")),
+  }
 }
 
 build(options).catch(() => process.exit(1))

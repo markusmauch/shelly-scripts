@@ -13,7 +13,8 @@ export function call( domain: Domain, service: string, entityId: string, payload
         "HTTP.Request",
         {
             "method": "POST",
-            "url": `${baseUrl}/services/${domain}/${service}`,
+            // "url": `${baseUrl}/services/${domain}/${service}`,
+            "url": baseUrl + "/services/" + domain + "/" + service,
             "headers": {
                 "Authorization": "Bearer " + token
             },
@@ -29,7 +30,8 @@ export function states( entityId: string, callback: (result: HttpRequestResult) 
         "HTTP.Request",
         {
             "method": "GET",
-            "url": `${baseUrl}/states/${entityId}`,
+            // "url": `${baseUrl}/states/${entityId}`,
+            "url": baseUrl + "/states/" + entityId,
             "headers": {
                 "Authorization": "Bearer " + token
             }
