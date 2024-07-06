@@ -1,3 +1,5 @@
+/// <reference path="../../types/shelly.d.ts" />
+
 import * as HomeAssistant from "../Library/HomeAssistant";
 
 Shelly.addEventHandler(

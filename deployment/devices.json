@@ -5,6 +5,11 @@
         "file": "HintergrundlichtKuche.js"
     },
     {
+        "host": "192.168.0.239",
+        "id": 1,
+        "file": "LichtschalterBuro.js"
+    },
+    {
         "host": "192.168.0.242",
         "id": 2,
         "file": "LichtschalterEmpore.js"

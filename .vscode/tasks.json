@@ -1,8 +1,15 @@
 {
     "tasks": [
         {
+            "label": "Install Dependencies",
+            "type": "shell",
+            "command": ["pip install -r ${workspaceFolder}/deployment/requirements.txt"],
+            "problemMatcher": [],
+        },
+        {
             "label": "Bundle",
             "type": "shell",
+            "dependsOn": "Install Dependencies",
             "command": ["rm -Rf ${workspaceFolder}/dist/* && npx spack && rm ${workspaceFolder}/dist/*.map && python3 ${workspaceFolder}/deployment/substitute.py --env-file ${workspaceFolder}/.env ${workspaceFolder}/dist"],
             "problemMatcher": [],
         },
@@ -10,7 +17,7 @@
             "label": "Deploy",
             "type": "shell",
             "dependsOn": "Bundle",
-            "command": ["pip install -r ${workspaceFolder}/deployment/requirements.txt && python ${workspaceFolder}/deployment/deploy.py"],
+            "command": ["python ${workspaceFolder}/deployment/deploy.py"],
             "problemMatcher": [],
         }
     ]
