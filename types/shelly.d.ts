@@ -141,7 +141,7 @@ declare const Timer: {
      * @param userdata Can be used to pass data from the invoker to the callback
      * @returns On success, returns a handle which can be used to stop the timer with Timer.clear(timer_handle). If invoked with invalid arguments the script is aborted.
      */
-    set(period: number, repeat: boolean, callback: Function, userdata: any): timer_handle
+    set(period: number, repeat: boolean, callback: Function, userdata?: any): timer_handle
     /**
      * To stop the execution of a timer, use:
      * @param timer_handle handle previously returned by Timer.set()

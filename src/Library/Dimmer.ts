@@ -2,10 +2,11 @@ import * as HomeAssistant from "../Library/HomeAssistant";
 
 export class Dimmer
 {
-    private dir = "up";
+    private dir: "up" | "down" = "up";
     private dim = false;
     private entityId = "";
-    private delay = 800;
+    private delay = 200;
+    private step = 10;
 
     public constructor(entityId: string)
     {
@@ -18,33 +19,37 @@ export class Dimmer
         HomeAssistant.states(this.entityId, result =>
         {
             var response = JSON.parse( result.body );
-            const brightness = response?.attributes?.brightness;
-            if ( brightness !== undefined )
+            const brightness = response?.attributes?.brightness ?? 0;
+            if (brightness == 0)
             {
-                if (brightness == 0)
+                this.dir = "up";
+                this.dimmUp();
+            }
+            else if (brightness == 255)
+            {
+                this.dir = "down";
+                this.dimmDown();
+            }
+            else
+            {
+                if ( this.dir === "up" )
+                {
+                    this.dir = "down";
+                    this.dimmDown();
+                }
+                else
                 {
                     this.dir = "up";
                     this.dimmUp();
                 }
-                else if (brightness == 255)
-                {
-                    this.dir = "down"
-                }
-                else
-                {
-                    this.dir = this.dir === "up" ? "down" : "up";
-                }
-            }
-            else
-            {
-                this.dim = false;
+
             }
         } );
     }
 
     private dimmUp()
     {
-        HomeAssistant.call("light", "turn_on", this.entityId, { "brightness_step_pct": 10 }, result =>
+        HomeAssistant.call("light", "turn_on", this.entityId, { "brightness_step_pct": this.step }, result =>
         {
             const response = JSON.parse( result.body );
             const brightness = response?.attributes?.brightness;
@@ -63,7 +68,33 @@ export class Dimmer
                     {
                         this.dim = false;
                     }
-                }, 800 );
+                } );
+            }
+        });
+    }
+
+    private dimmDown()
+    {
+        HomeAssistant.call("light", "turn_on", this.entityId, { "brightness_step_pct": -this.step }, result =>
+        {
+            const response = JSON.parse( result.body );
+            const brightness = response?.attributes?.brightness;
+            if ( brightness <= 0 )
+            {
+                this.dim = false;
+            }
+            else
+            {
+                Timer.set(this.delay, false, () => {
+                    if ( this.dim === true )
+                    {
+                        this.dimmDown();
+                    }
+                    else
+                    {
+                        this.dim = false;
+                    }
+                } );
             }
         });
     }

@@ -3,7 +3,7 @@
         {
             "label": "Bundle",
             "type": "shell",
-            "command": ["rm -Rf ${workspaceFolder}/dist/* && node ${workspaceFolder}/esbuild.mjs"],
+            "command": ["rm -Rf ${workspaceFolder}/dist/* && npx spack && rm ${workspaceFolder}/dist/*.map && python3 ${workspaceFolder}/deployment/substitute.py --env-file ${workspaceFolder}/.env ${workspaceFolder}/dist"],
             "problemMatcher": [],
         },
         {
