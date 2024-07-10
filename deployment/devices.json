@@ -1,5 +1,10 @@
 [
     {
+        "host": "192.168.0.207",
+        "id": 1,
+        "file": "Licht1Esszimmer.js"
+    },
+    {
         "host": "192.168.0.237",
         "id": 1,
         "file": "HintergrundlichtKuche.js"
@@ -33,5 +38,10 @@
         "host": "192.168.0.246",
         "id": 2,
         "file": "LichtschalterFlurKeller.js"
+    },
+    {
+        "host": "192.168.0.247",
+        "id": 1,
+        "file": "Licht2Esszimmer.js"
     }
 ]
