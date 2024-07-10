@@ -9,8 +9,11 @@ Shelly.addEventHandler(
             {
                 Shelly.call("Switch.toggle", {'id': 0});
             }
+            else if (event.info.event === "double_push") {
+                HomeAssistant.call("light", "toggle", "light.hintergrundlicht_buro");
+            }
             else if (event.info.event === "long_push") {
-                // HomeAssistant.call("script", "turn_on", "script.lichter_erdgeschoss_ausschalten");
+                HomeAssistant.call("lock", "open", "lock.haustur" );
             }
         }
         else {
