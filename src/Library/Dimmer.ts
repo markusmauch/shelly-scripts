@@ -1,4 +1,5 @@
 import * as HomeAssistant from "../Library/HomeAssistant";
+import { Component, addEventHandlers } from "./Shelly";
 
 export class Dimmer
 {
@@ -6,11 +7,41 @@ export class Dimmer
     private dim = false;
     private entityId = "";
     private delay = 200;
-    private step = 10;
+    private step = 16;
 
-    public constructor(entityId: string)
+    public constructor(entityId: string, component?: Component)
     {
         this.entityId = entityId;
+        if ( component )
+        {
+            addEventHandlers( "input:0", {
+                single_push: () => this.toggle(),
+                long_push: () => this.start(),
+                btn_up: () => this.stop(),
+                double_push: () => this.turnOn(255),
+            } );
+        }
+    }
+
+    public turnOn( brightness = 127 )
+    {
+        HomeAssistant.call("light", "turn_on", this.entityId, { brightness: brightness });
+        this.dim = false;
+        this.dir = "down";
+    }
+
+    public turnOff()
+    {
+        HomeAssistant.call("light", "turn_off", this.entityId, { brightness: 127 });
+        this.dim = false;
+        this.dir = "down";
+    }
+
+    public toggle()
+    {
+        HomeAssistant.call("light", "toggle", this.entityId, { brightness: 127 });
+        this.dim = false;
+        this.dir = "up";
     }
 
     public start()
@@ -49,7 +80,7 @@ export class Dimmer
 
     private dimmUp()
     {
-        HomeAssistant.call("light", "turn_on", this.entityId, { "brightness_step_pct": this.step }, result =>
+        HomeAssistant.call("light", "turn_on", this.entityId, { "brightness_step": this.step }, result =>
         {
             const response = JSON.parse( result.body );
             const brightness = response?.attributes?.brightness;
@@ -75,7 +106,7 @@ export class Dimmer
 
     private dimmDown()
     {
-        HomeAssistant.call("light", "turn_on", this.entityId, { "brightness_step_pct": -this.step }, result =>
+        HomeAssistant.call("light", "turn_on", this.entityId, { "brightness_step": -this.step }, result =>
         {
             const response = JSON.parse( result.body );
             const brightness = response?.attributes?.brightness;
