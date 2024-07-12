@@ -14,7 +14,7 @@ export class Dimmer
         this.entityId = entityId;
         if ( component )
         {
-            addEventHandlers( "input:0", {
+            addEventHandlers( component, {
                 single_push: () => this.toggle(),
                 long_push: () => this.start(),
                 btn_up: () => this.stop(),
