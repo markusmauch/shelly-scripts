@@ -5,6 +5,11 @@
         "file": "Licht1Esszimmer.js"
     },
     {
+        "host": "192.168.0.230",
+        "id": 1,
+        "file": "HintergrundlichtBadezimmer.js"
+    },
+    {
         "host": "192.168.0.237",
         "id": 1,
         "file": "HintergrundlichtKuche.js"

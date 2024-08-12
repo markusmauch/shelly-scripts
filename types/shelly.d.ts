@@ -26,7 +26,7 @@ type CallCallback<TResult=any> = (
     userdata?: any
 ) => void;
 
-interface SwitchTogglePartams
+interface SwitchToggleParams
 {
     id: number;
 }
@@ -35,6 +35,14 @@ interface SwitchToggleResult
 {
     was_on: boolean;
 }
+
+interface RgbwToggleParams
+{
+    id: number;
+}
+
+interface RgbwToggleResult
+{}
 
 interface HttpRequestParams
 {
@@ -66,6 +74,7 @@ declare const Shelly: {
      */
     call(method: "HTTP.Request", params: HttpRequestParams, callback?: CallCallback<HttpRequestResult>): void;
     call(method: "Switch.toggle", params: SwitchToggleParams, callback?: CallCallback<SwitchToggleResult>): void;
+    call(method: "RGBW.toggle", params: RgbwToggleParams, callback?: CallCallback<RgbwToggleResult>): void;
     call(method: "KVS.Set", params: { key: string, value: string }, callback?: CallCallback<void>): void;
     call(method: "KVS.Get", params: { key: string }, callback?: CallCallback<{etag: string, value: string;}>): void;
 
