@@ -14,7 +14,6 @@ export function call( domain: Domain, service: string, entityId: string, payload
         "HTTP.Request",
         {
             "method": "POST",
-            // "url": `${baseUrl}/services/${domain}/${service}`,
             "url": baseUrl + "/services/" + domain + "/" + service,
             "headers": {
                 "Authorization": "Bearer " + token
@@ -24,6 +23,43 @@ export function call( domain: Domain, service: string, entityId: string, payload
         result => callback(result)
     );
 }
+
+// export function callAsync( domain: Domain, service: string, entityId: string, payload?: {[key:string]: string|number} )
+// {
+//     return new Promise( ( resolve, reject ) =>
+//     {
+//         try
+//         {
+//             const body = payload === undefined ? {} : payload;
+//             body.entity_id = entityId;
+//             Shelly.call(
+//                 "HTTP.Request",
+//                 {
+//                     "method": "POST",
+//                     "url": baseUrl + "/services/" + domain + "/" + service,
+//                     "headers": {
+//                         "Authorization": "Bearer " + token
+//                     },
+//                     "body": JSON.stringify(body)
+//                 },
+//                 result => {
+//                     if ( result.code == 200 )
+//                     {
+//                         resolve(result);
+//                     }
+//                     else
+//                     {
+//                         reject(result.message);
+//                     }
+//                 }
+//             );
+//         }
+//         catch ( error )
+//         {
+//             reject(error)
+//         }
+//     } );
+// }
 
 export function states( entityId: string, callback: (result: HttpRequestResult) => void = () => {} )
 {

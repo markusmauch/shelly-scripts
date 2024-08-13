@@ -361,7 +361,7 @@ declare const HTTPServer: {
             body?: string
         },
         response: {
-            cody?: number
+            code?: number
             body?: string
             headers?: any[]
             send: () => boolean
