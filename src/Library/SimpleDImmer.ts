@@ -12,7 +12,7 @@ export class SimpleDimmer
 
     public press(callback: () => void)
     {
-        HomeAssistant.call("light", "turn_on", this.entityId, { brightness: this.brightness[this.state] }, result =>
+        HomeAssistant.call("light", "turn_on", this.entityId, { brightness: this.brightness[this.state], white: this.brightness[this.state] }, result =>
         {
             if (this.state === "low")
             {
