@@ -6,7 +6,16 @@ const token = API_KEY;
 
 export type Domain =  "alarm_control_panel" | "automation" | "binary_sensor" | "camera" | "climate" | "cover" | "device_tracker" | "fan" | "geo_location" | "group" | "humidifier" | "input_boolean" | "input_datetime" | "input_number" | "input_select" | "input_text" | "light" | "lock" | "media_player" | "notify" | "number" | "person" | "plant" | "proximity" | "remote" | "scene" | "script" | "select" | "sensor" | "siren" | "sun" | "switch" | "timer" | "update" | "vacuum" | "water_heater" | "weather" | "zone";
 
-export function call( domain: Domain, service: string, entityId: string, payload?: {[key:string]: string|number}, callback: (result: HttpRequestResult) => void = () => {} )
+export interface State
+{
+    attributes: { [key: string]: any },
+    entity_id: string;
+    last_changed: string;
+    last_updated: string;
+    state: string;
+}
+
+export function call( domain: Domain, service: string, entityId: string, payload?: {[key:string]: any}, callback: (result: HttpRequestResult) => void = () => {} )
 {
     const body = payload === undefined ? {} : payload;
     body.entity_id = entityId;
@@ -61,7 +70,7 @@ export function call( domain: Domain, service: string, entityId: string, payload
 //     } );
 // }
 
-export function states( entityId: string, callback: (result: HttpRequestResult) => void = () => {} )
+export function states( entityId: string, callback: (result: State) => void = () => {} )
 {
     Shelly.call(
         "HTTP.Request",
@@ -73,6 +82,6 @@ export function states( entityId: string, callback: (result: HttpRequestResult) 
                 "Authorization": "Bearer " + token
             }
         },
-        result => callback(result)
+        result => callback(JSON.parse(result.body))
     );
 }
