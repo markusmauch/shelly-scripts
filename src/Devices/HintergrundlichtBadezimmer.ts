@@ -10,7 +10,7 @@ HTTPServer.registerEndpoint("lichtschalter-badezimmer/input/0/long-press", ( req
     });
 }, null );
 
-const dimmerHintergrundLicht = new SimpleDimmer("light.hintergrundlicht_badezimmer");
+const dimmerHintergrundLicht = new SimpleDimmer("light.hintergrundlicht_badezimmer", true);
 HTTPServer.registerEndpoint("lichtschalter-badezimmer/input/1/long-press", ( request, response, arg ) => {
     dimmerHintergrundLicht.press(() => {
         response.code = 200;

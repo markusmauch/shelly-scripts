@@ -12,11 +12,15 @@ export class SimpleDimmer
 
     public press(callback: () => void)
     {
-        this.getRgbColor( rgbColor =>
-        {
+        this.getRgbwColor( rgbwColor => {
+            
+            if ( rgbwColor !== undefined )
+            {
+                rgbwColor[3] = this.brightness[this.state];
+            }
             const parameters = {
                 brightness: this.brightness[this.state],
-                rgbw_color: rgbColor !== undefined ? [ ...rgbColor, this.brightness[this.state] ] : undefined
+                rgbw_color: rgbwColor
             };
             HomeAssistant.call("light", "turn_on", this.entityId, parameters, result =>
             {
@@ -35,17 +39,52 @@ export class SimpleDimmer
                 callback();
             });
         } );
+        
+        // this.getRgbColor( rgbColor =>
+        // {
+        //     print("asdf " + rgbColor)
+        //     const parameters = {
+        //         brightness: this.brightness[this.state],
+        //         rgbw_color: rgbColor !== undefined ? [ ...rgbColor, this.brightness[this.state] ] : undefined
+        //     };
+        //     HomeAssistant.call("light", "turn_on", this.entityId, parameters, result =>
+        //     {
+        //         if (this.state === "low")
+        //         {
+        //             this.state = "mid";
+        //         }
+        //         else if (this.state ===  "mid")
+        //         {
+        //             this.state = "high";
+        //         }
+        //         else if (this.state === "high")
+        //         {
+        //             this.state = "low";
+        //         }
+        //         callback();
+        //     });
+        // } );
     }
 
-    private getRgbColor( callback: (rgbColor?: [number, number, number]) => void)
+    private getRgbwColor( callback: (rgbwColor?: [number, number, number, number]) => void)
     {
         if ( this.rgbwMode === true )
         {
-            HomeAssistant.states(this.entityId, result =>
-            {
-                const rgb = result.attributes.rgb_color;
-                callback(rgb)
-            } );
+            HomeAssistant.states(
+                this.entityId,
+                result =>
+                {
+                    const rgbw = result.attributes.rgbw_color;
+                    if (rgbw !== null)
+                    {
+                        callback(rgbw);
+                    }
+                    else
+                    {
+                        callback()
+                    }
+                }
+            );
         }
         else
         {

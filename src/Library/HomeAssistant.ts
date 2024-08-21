@@ -1,3 +1,5 @@
+/// <reference path="../../types/shelly.d.ts" />
+
 declare const API_KEY: string;
 declare const BASE_URL: string;
 
@@ -19,6 +21,7 @@ export function call( domain: Domain, service: string, entityId: string, payload
 {
     const body = payload === undefined ? {} : payload;
     body.entity_id = entityId;
+    print(JSON.stringify(body));
     Shelly.call(
         "HTTP.Request",
         {
@@ -33,55 +36,21 @@ export function call( domain: Domain, service: string, entityId: string, payload
     );
 }
 
-// export function callAsync( domain: Domain, service: string, entityId: string, payload?: {[key:string]: string|number} )
-// {
-//     return new Promise( ( resolve, reject ) =>
-//     {
-//         try
-//         {
-//             const body = payload === undefined ? {} : payload;
-//             body.entity_id = entityId;
-//             Shelly.call(
-//                 "HTTP.Request",
-//                 {
-//                     "method": "POST",
-//                     "url": baseUrl + "/services/" + domain + "/" + service,
-//                     "headers": {
-//                         "Authorization": "Bearer " + token
-//                     },
-//                     "body": JSON.stringify(body)
-//                 },
-//                 result => {
-//                     if ( result.code == 200 )
-//                     {
-//                         resolve(result);
-//                     }
-//                     else
-//                     {
-//                         reject(result.message);
-//                     }
-//                 }
-//             );
-//         }
-//         catch ( error )
-//         {
-//             reject(error)
-//         }
-//     } );
-// }
-
-export function states( entityId: string, callback: (result: State) => void = () => {} )
+export function states( entityId: string, callback: (result: State) => void )
 {
     Shelly.call(
         "HTTP.Request",
         {
             "method": "GET",
-            // "url": `${baseUrl}/states/${entityId}`,
             "url": baseUrl + "/states/" + entityId,
             "headers": {
                 "Authorization": "Bearer " + token
             }
         },
-        result => callback(JSON.parse(result.body))
+        result =>
+        {
+            const body = JSON.parse(result.body);
+            callback(body);
+        }
     );
 }
