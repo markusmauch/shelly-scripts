@@ -10,7 +10,7 @@ export class SimpleDimmer
     public constructor( private entityId: string, private rgbwMode = false )
     {}
 
-    public press(callback: () => void)
+    public press(callback: (parameters: any) => void)
     {
         this.getRgbwColor( rgbwColor => {
             
@@ -36,34 +36,9 @@ export class SimpleDimmer
                 {
                     this.state = "low";
                 }
-                callback();
+                callback(parameters);
             });
         } );
-        
-        // this.getRgbColor( rgbColor =>
-        // {
-        //     print("asdf " + rgbColor)
-        //     const parameters = {
-        //         brightness: this.brightness[this.state],
-        //         rgbw_color: rgbColor !== undefined ? [ ...rgbColor, this.brightness[this.state] ] : undefined
-        //     };
-        //     HomeAssistant.call("light", "turn_on", this.entityId, parameters, result =>
-        //     {
-        //         if (this.state === "low")
-        //         {
-        //             this.state = "mid";
-        //         }
-        //         else if (this.state ===  "mid")
-        //         {
-        //             this.state = "high";
-        //         }
-        //         else if (this.state === "high")
-        //         {
-        //             this.state = "low";
-        //         }
-        //         callback();
-        //     });
-        // } );
     }
 
     private getRgbwColor( callback: (rgbwColor?: [number, number, number, number]) => void)
