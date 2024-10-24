@@ -73,6 +73,7 @@ declare const Shelly: {
      * @param callback Function, will be invoked when the call completes
      */
     call(method: "HTTP.Request", params: HttpRequestParams, callback?: CallCallback<HttpRequestResult>): void;
+    call(method: "HTTP.GET", params: HttpRequestParams, callback?: CallCallback<HttpRequestResult>): void;
     call(method: "Switch.toggle", params: SwitchToggleParams, callback?: CallCallback<SwitchToggleResult>): void;
     call(method: "RGBW.toggle", params: RgbwToggleParams, callback?: CallCallback<RgbwToggleResult>): void;
     call(method: "KVS.Set", params: { key: string, value: string }, callback?: CallCallback<void>): void;

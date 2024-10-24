@@ -47,10 +47,9 @@ export class Dimmer
     public start()
     {
         this.dim = true;
-        HomeAssistant.states(this.entityId, result =>
+        HomeAssistant.states(this.entityId, state =>
         {
-            var response = JSON.parse( result.body );
-            const brightness = response?.attributes?.brightness ?? 0;
+            const brightness = state?.attributes?.brightness ?? 0;
             if (brightness == 0)
             {
                 this.dir = "up";
@@ -73,7 +72,6 @@ export class Dimmer
                     this.dir = "up";
                     this.dimmUp();
                 }
-
             }
         } );
     }

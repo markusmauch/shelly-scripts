@@ -35,7 +35,6 @@ export function call( domain: Domain, service: string, entityId: string, payload
         result => callback(result)
     );
 }
-
 export function states( entityId: string, callback: (result: State) => void )
 {
     Shelly.call(
@@ -47,7 +46,7 @@ export function states( entityId: string, callback: (result: State) => void )
                 "Authorization": "Bearer " + token
             }
         },
-        result =>
+        ( result, error_code, error_msg, user_data ) =>
         {
             const body = JSON.parse(result.body);
             callback(body);
