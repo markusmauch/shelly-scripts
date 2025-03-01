@@ -5,6 +5,6 @@ import { addEventHandlers } from "../Library/Shelly";
 
 addEventHandlers("input:0", {
     single_push: () => Shelly.call("Switch.toggle", {'id': 0}),
-    double_push: () => HomeAssistant.call("switch", "toggle", "switch.hintergrundlicht_buro"),
-    long_push: () => HomeAssistant.call("lock", "open", "lock.haustur" ),
-});
+    double_push: () => HomeAssistant.call("light", "toggle", "light.schneemann"),
+    long_push: () => HomeAssistant.call("light", "toggle", "light.wunderlicht"),
+} );
