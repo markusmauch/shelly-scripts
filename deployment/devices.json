@@ -1,10 +1,5 @@
 [
     {
-        "host": "192.168.0.103",
-        "id": 1,
-        "file": "WallDisplayEmpore.js"
-    },
-    {
         "host": "192.168.0.207",
         "id": 1,
         "file": "Licht1Esszimmer.js"
@@ -63,5 +58,10 @@
         "host": "192.168.0.247",
         "id": 1,
         "file": "Licht2Esszimmer.js"
+    },
+    {
+        "host": "192.168.0.203",
+        "id": 1,
+        "file": "LichtWohnenUG.js"
     }
 ]
